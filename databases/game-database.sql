@@ -81,7 +81,7 @@ insert into items values ("206336227507", "jumping_jacket", 1554106868, "The Spe
 insert into items values ("496789188508", "hysterical_handbag", 1549315259, "", "547432520446");
 insert into items values ("189225318711", "notorious_knot", 1603282848, "the funny hat", "594720282446");
 
-/* 
+/*
 1. Show all players and the name of the platform they own the game on.
 */
 select ply.name, plt.name from players ply join platforms plt using (platform_id);
@@ -107,9 +107,14 @@ select distinct players.name from items join players using (player_id);
 select item_type, item_name, players.name as "owner_name" from items join players order by creation_date desc limit 1;
 
 /*
-6.
+6. Release the game onto a new platform and put it on discount.
 */
-	
+select * from platforms order by pricing;
+insert into platforms values ("ITCH", "Itch.io", "Leaf Corcoran", 50.00, 0);
+select * from platforms order by pricing;
+update platforms set pricing = 30.00 where platform_id = "ITCH";
+select * from platforms order by pricing;
+
 /*
 7. Altars the player table to keep track of how many times a player has been reported, and counts 5 reports for Garrisonior.
 */
@@ -149,8 +154,9 @@ insert into items values ("295384712222", "backwards_bowtie", unix_timestamp(now
 select * from items where player_id = "547432520446";
 
 /*
-13. 
+13. Finds the platform with the lowest price for the game, and the price it charges.
 */
+select name, pricing from platforms order by pricing limit 1;
 
 /*
 14. Deletes a players account, as well as all servers and items they own.
@@ -160,8 +166,14 @@ delete from players where player_id = 594722982446;
 select player_id, name from players;
 
 /*
-15.
+15. Creates a new server and hands it over to a new user.
 */
+select * from servers;
+insert into servers values ("000000012422", "STEAM", "599527132446", "The Underground", "ASIA");
+select * from servers;
+insert into players values ("719991112446", "STEAM", "Hatsune Miku", 0);
+update servers set player_id = 719991112446 where server_id = "000000012422";
+select * from servers;
 
 /*
 16. Show players who own a server and the number of servers they own.
