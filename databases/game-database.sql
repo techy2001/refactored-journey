@@ -179,4 +179,3 @@ select * from servers;
 16. Show players who own a server and the number of servers they own.
 */
 select players.name, count(players.name) as server_count from players, servers where players.player_id = servers.player_id group by servers.player_id having server_count > 0;
-
